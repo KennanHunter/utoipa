@@ -135,6 +135,11 @@ impl SchemaType<'_> {
                 );
             }
 
+            #[cfg(feature = "bigdecimal")]
+            if !primitive {
+                primitive = matches!(name, "BigDecimal");
+            }
+
             #[cfg(feature = "jiff_0_2")]
             if !primitive {
                 primitive = matches!(name, "Zoned" | "Date");
@@ -347,6 +352,8 @@ pub enum KnownFormat {
     Iri,
     #[cfg(feature = "url")]
     IriReference,
+    #[cfg(feature = "bigdecimal")]
+    BigDecimal,
     Email,
     IdnEmail,
     Hostname,
@@ -627,6 +634,10 @@ impl ToTokens for KnownFormat {
             #[cfg(feature = "url")]
             Self::UriReference => tokens.extend(quote!(utoipa::openapi::schema::SchemaFormat::KnownFormat(
                 utoipa::openapi::schema::KnownFormat::UriReference
+            ))),
+            #[cfg(feature = "bigdecimal")]
+            Self::BigDecimal => tokens.extend(quote!(utoipa::openapi::schema::SchemaFormat::KnownFormat(
+                utoipa::openapi::schema::KnownFormat::BigDecimal
             ))),
             #[cfg(feature = "url")]
             Self::Iri => tokens.extend(quote!(utoipa::openapi::schema::SchemaFormat::KnownFormat(

@@ -31,6 +31,9 @@ regex = { version = "1.7", optional = true }
 uuid = { version = "1", features = ["serde"], optional = true }
 ulid = { version = "1", optional = true, default-features = false }
 url = { version = "2", optional = true }
+bigdecimal = { version = "0.4", optional = true, features = [
+    "serde",
+], default-features = false }
 
 [dev-dependencies]
 utoipa = { path = "../utoipa", features = [
@@ -76,6 +79,7 @@ repr = []
 indexmap = []
 rc_schema = []
 config = ["dep:utoipa-config", "dep:once_cell"]
+bigdecimal = ["dep:bigdecimal"]
 
 # EXPERIEMENTAL! use with cauntion
 auto_into_responses = []

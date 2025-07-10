@@ -1981,6 +1981,23 @@ fn derive_struct_with_ulid_type() {
     }
 }
 
+#[cfg(feature = "bigdecimal")]
+#[test]
+fn derive_struct_with_bigdecimal_type() {
+    use bigdecimal::BigDecimal;
+
+    let post = api_doc! {
+        struct Post {
+            id: BigDecimal,
+        }
+    };
+
+    assert_value! {post=>
+        "properties.id.type" = r#""string""#, "Post id type"
+        "properties.id.format" = r#""bigdecimal""#, "Post id format"
+    }
+}
+
 #[cfg(feature = "url")]
 #[test]
 fn derive_struct_with_url_type() {
